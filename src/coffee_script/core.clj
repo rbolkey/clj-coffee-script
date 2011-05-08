@@ -1,5 +1,4 @@
 (ns coffee-script.core
-  "ADD DESCRIPTION!!"
   (:require [clojure.java.io :as io])
   (:use [clojure.contrib.json :only  (json-str)])
   (:import (org.mozilla.javascript Context ContextAction ContextFactory JavaScriptException Scriptable)))
@@ -7,7 +6,8 @@
 (defn- run-context-action
   ([^ContextAction action] (. (ContextFactory/getGlobal) (call action))))
 
-(defn evaluate-compiler
+(defn evaluate-script
+  "Reads the given source script into a Scriptable instance and returns it."
   [source]
   (with-open [script (io/reader source)]
     (run-context-action
@@ -15,7 +15,7 @@
        (run [this context]
          (do (.setOptimizationLevel context -1))
          (let [^Scriptable x (.initStandardObjects context)]
-           (.evaluateReader context x script "coffee-script.js" 0 nil)
+           (. context (evaluateReader x script "evaluated-script" 0 nil))
            x))))))
 
 (def ^{:doc "Default options for compiling coffee script"}
@@ -26,12 +26,12 @@
   *coffee-compiler*)
 
 (def builtin-coffee-compiler
-  (evaluate-compiler (io/resource "coffee_script/coffee-script.js")))
+  (evaluate-script (io/resource "coffee_script/coffee-script.js")))
 
 (defmacro with-coffee-compiler
   "Evaluates the body in the context of the coffee compiler coerced from the given input."
   [c & body]
-  `(binding [*coffee-compiler* (evaluate-compiler ~c)]
+  `(binding [*coffee-compiler* (evaluate-script ~c)]
      ~@body))
 
 (defn compile-coffee
