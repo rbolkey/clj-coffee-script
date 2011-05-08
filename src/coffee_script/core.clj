@@ -21,14 +21,14 @@
 (defn compile-coffee
   ""
   ([context scope source opts]
-     (do (.put scope "coffeeScriptSource" scope source))
-     (.evaluateString context scope
-                      (format "CoffeeScript.compile(coffeeScriptSource, %s);"
-                              (json-str opts))
-                      "lein-coffee-script" 0 nil))
+     (do (. scope (put "coffeeScriptSource" scope source)))
+     (. context (evaluateString scope
+                                (format "CoffeeScript.compile(coffeeScriptSource, %s);"
+                                        (json-str opts))
+                                "lein-coffee-script" 0 nil)))
   ([context source opts]
      (compile-coffee context
-                     (doto (.newObject context (global-scope)) (.setParentScope (global-scope)))
+                     (doto (. context (newObject (global-scope))) (.setParentScope (global-scope)))
                      source opts))
   ([source opts]
      (try (compile-coffee (Context/enter) source opts)
