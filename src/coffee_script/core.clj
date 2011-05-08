@@ -19,7 +19,7 @@
            x))))))
 
 (def ^{:doc "Default options for compiling coffee script"}
-  *default-coffee-options*
+  *default-compile-options*
   {:bare false})
 
 (declare ^{:doc "The CoffeeScript compiler used for compiling."}
@@ -46,7 +46,7 @@
               (do (. scope (put "coffeeScriptSource" scope source)))
               (. context (evaluateString scope
                                          (format "CoffeeScript.compile(coffeeScriptSource, %s);"
-                                                 (json-str (merge *default-coffee-options* opts)))
-                                         "lein-coffee-script" 0 nil))))))))
+                                                 (json-str (merge *default-compile-options* opts)))
+                                         "compiled-coffee-script" 0 nil))))))))
   ([^CharSequence source]
      (compile-coffee source {})))
