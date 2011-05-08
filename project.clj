@@ -1,4 +1,4 @@
-(defproject clj-coffee-script "1.0.0-SNAPSHOT"
+(defproject clj-coffee-script "1.1.0-SNAPSHOT"
   :description "Clojure wrapper for the CoffeeScript compiler."
   :url "http://www.github.com/rbolkey/clj-coffee-script"
   :license {:name "Eclipse Public License - v 1.0"
