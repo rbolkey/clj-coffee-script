@@ -1,6 +1,7 @@
 (ns coffee-script.core
   "ADD DESCRIPTION!!"
   (:require [clojure.java.io :as io])
+  (:use [clojure.contrib.json :only  (json-str)])
   (:import (org.mozilla.javascript Context JavaScriptException Scriptable)))
 
 (def ^{:doc "Default options for compiling coffee script"} *default-coffee-options*
@@ -16,16 +17,21 @@
 
 (defn compile-coffee
   ""
-  [source]
-  (let [context (Context/enter)]
-    (try
-      (let [cs (doto (.newObject context global-scope) (.setParentScope global-scope))]
-	(.put cs "coffeeScriptSource" cs source)
-	(.evaluateString context cs
-			 (format "CoffeeScript.compile(coffeeScriptSource, %s);"
-				 "{bare: true}")
-			 "lein-coffee-script" 0 nil))
-      (finally (Context/exit)))))
+  ([context scope source opts]
+     (do (.put scope "coffeeScriptSource" scope source))
+     (.evaluateString context scope
+                      (format "CoffeeScript.compile(coffeeScriptSource, %s);"
+                              (json-str opts))
+                      "lein-coffee-script" 0 nil))
+  ([context source opts]
+     (compile-coffee context
+                     (doto (.newObject context global-scope) (.setParentScope global-scope))
+                     source opts))
+  ([source opts]
+     (try (compile-coffee (Context/enter) source opts)
+          (finally (Context/exit))))
+  ([source]
+     (compile-coffee source {})))
 
 (defn coffee [project]
   "Compile coffee files"
