@@ -48,7 +48,7 @@ clj-coffee-script is available via
 package to your project by including the following dependency in your
 project.clj file:
 
-     [clj-coffee-script "1.0,0"]
+     [clj-coffee-script "1.0.0"]
 
 ## License
 
