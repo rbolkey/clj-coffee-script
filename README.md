@@ -25,7 +25,7 @@
     ;;          var x;
     ;;          x = [1, 2, 3];
     ;; 
-    (cs/compile-coffee "x = [1,2,3] {:bare true})
+    (cs/compile-coffee "x = [1,2,3]" {:bare true})
 
     ;; If there is a problem with the built-in CoffeeScript compiler,
     ;; you can use an external version of the compiler by using the
@@ -39,6 +39,16 @@
     ;; *default-coffee-options* symbol to a different value.
     (with-binding [*default-compile-options* {:bare true}]
         (cs/compile-coffee "square = (x) -> x * x"))
+
+## Installing
+
+clj-coffee-script is available via
+[clojars](http://clojars.org/clj-coffee-script).  If you are using
+[Leiningen](https://github.com/technomancy/leiningen), you can add the
+package to your project by including the following dependency in your
+project.clj file:
+
+     [clj-coffee-script "1.0,0"]
 
 ## License
 
