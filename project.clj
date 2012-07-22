@@ -5,8 +5,9 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"
             :distribution :repo
             :comments "same as Clojure"}
-  :dependencies [[org.clojure/clojure "1.2.1"]
+  :dependencies [[org.clojure/clojure "1.4.0"]
+                 [clj-json "0.5.1"]
                  [rhino/js "1.7R2"]]
-  :dev-dependencies [[lein-difftest "1.3.1"]
-                     [swank-clojure "1.3.0"]]
+  :dev-dependencies [[lein-difftest "1.3.8"]
+                     [swank-clojure "1.4.2"]]
   :hooks [leiningen.hooks.difftest])
