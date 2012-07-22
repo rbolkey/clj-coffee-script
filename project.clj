@@ -7,7 +7,4 @@
             :comments "same as Clojure"}
   :dependencies [[org.clojure/clojure "1.4.0"]
                  [clj-json "0.5.1"]
-                 [rhino/js "1.7R2"]]
-  :dev-dependencies [[lein-difftest "1.3.8"]
-                     [swank-clojure "1.4.2"]]
-  :hooks [leiningen.hooks.difftest])
+                 [rhino/js "1.7R2"]])
