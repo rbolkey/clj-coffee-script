@@ -48,10 +48,10 @@ clj-coffee-script is available via
 package to your project by including the following dependency in your
 project.clj file:
 
-     [clj-coffee-script "1.0.0"]
+     [clj-coffee-script "1.1.0"]
 
 ## License
 
-Copyright (C) 2011 Richard Bolkey
+Copyright (C) 2012 Richard Bolkey
 
 Distributed under the Eclipse Public License, the same as Clojure.
