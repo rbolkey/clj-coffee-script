@@ -1,6 +1,5 @@
 (ns coffee-script.core
-  (:require [clojure.java.io :as io])
-  (:use [clojure.contrib.json :only  (json-str)])
+  (:require [clojure.java.io :as io] [clj-json.core :as json])
   (:import (org.mozilla.javascript Context ContextAction ContextFactory JavaScriptException Scriptable)))
 
 (defn- run-context-action
@@ -18,11 +17,11 @@
            (. context (evaluateReader x script "evaluated-script" 0 nil))
            x))))))
 
-(def ^{:doc "Default options for compiling coffee script"}
+(def ^:dynamic ^{:doc "Default options for compiling coffee script"}
   *default-compile-options*
   {:bare false})
 
-(declare ^{:doc "The CoffeeScript compiler used for compiling."}
+(declare ^:dynamic ^{:doc "The CoffeeScript compiler used for compiling."}
   *coffee-compiler*)
 
 (def builtin-coffee-compiler
@@ -46,7 +45,7 @@
               (do (. scope (put "coffeeScriptSource" scope source)))
               (. context (evaluateString scope
                                          (format "CoffeeScript.compile(coffeeScriptSource, %s);"
-                                                 (json-str (merge *default-compile-options* opts)))
+                                                 (json/generate-string (merge *default-compile-options* opts)))
                                          "compiled-coffee-script" 0 nil))))))))
   ([^CharSequence source]
      (compile-coffee source {})))
